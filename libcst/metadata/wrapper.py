@@ -21,6 +21,8 @@ from typing import (
     TypeVar,
 )
 
+from keke import ktrace
+
 from libcst._batched_visitor import BatchableCSTVisitor, visit_batched, VisitorMethod
 from libcst._exceptions import MetadataException
 from libcst.metadata.base_provider import BatchableMetadataProvider
@@ -38,6 +40,7 @@ if TYPE_CHECKING:
 _T = TypeVar("_T")
 
 
+@ktrace("providers")
 def _gen_batchable(
     wrapper: "MetadataWrapper",
     # pyre-fixme[2]: Parameter `providers` must have a type that does not contain `Any`

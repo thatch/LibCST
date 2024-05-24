@@ -15,6 +15,7 @@ from typing import (
     TYPE_CHECKING,
 )
 
+from keke import ktrace
 from libcst._metadata_dependent import MetadataDependent
 from libcst._typed_visitor import CSTTypedVisitorFunctions
 from libcst._visitors import CSTNodeT, CSTVisitor
@@ -36,6 +37,7 @@ class BatchableCSTVisitor(CSTTypedVisitorFunctions, MetadataDependent):
     Instances of this class cannot modify the tree.
     """
 
+    @ktrace()
     def get_visitors(self) -> Mapping[str, VisitorMethod]:
         """
         Returns a mapping of all the ``visit_<Type[CSTNode]>``,
@@ -59,7 +61,7 @@ class BatchableCSTVisitor(CSTTypedVisitorFunctions, MetadataDependent):
 
         return dict(methods)
 
-
+@ktrace()
 def visit_batched(
     node: CSTNodeT,
     batchable_visitors: Iterable[BatchableCSTVisitor],
@@ -85,7 +87,7 @@ def visit_batched(
     )
     return cast(CSTNodeT, node.visit(batched_visitor))
 
-
+@ktrace()
 def _get_visitor_methods(
     batchable_visitors: Iterable[BatchableCSTVisitor],
 ) -> _VisitorMethodCollection:
@@ -110,6 +112,7 @@ class _BatchedCSTVisitor(CSTVisitor):
     before_visit: Optional[VisitorMethod]
     after_leave: Optional[VisitorMethod]
 
+    @ktrace()
     def __init__(
         self,
         visitor_methods: _VisitorMethodCollection,

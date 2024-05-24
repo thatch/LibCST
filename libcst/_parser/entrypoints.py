@@ -13,6 +13,8 @@ import os
 from functools import partial
 from typing import Union
 
+from keke import ktrace
+
 from libcst._nodes.base import CSTNode
 from libcst._nodes.expression import BaseExpression
 from libcst._nodes.module import Module
@@ -91,6 +93,7 @@ def _pure_python_parse(
     return result
 
 
+@ktrace()
 def parse_module(
     source: Union[str, bytes],  # the only entrypoint that accepts bytes
     config: PartialParserConfig = _DEFAULT_PARTIAL_PARSER_CONFIG,
